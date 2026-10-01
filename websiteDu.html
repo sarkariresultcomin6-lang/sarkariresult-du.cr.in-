@@ -1,0 +1,1383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DU Recruitment 2026 – Application Portal</title>
+<style>
+/* Modern CSS Reset & Basics */
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:#f5f3f7;color:#1e293b}
+
+/* Premium Header Styles - Purple Theme based on Logo */
+header{background:linear-gradient(135deg,#3b0764,#7e22ce);color:#fff;padding:25px 20px;box-shadow:0 4px 10px rgba(0,0,0,0.15)}
+.header-content { display: flex; align-items: center; justify-content: center; gap: 20px; max-width: 1150px; margin: 0 auto; }
+.du-logo { width: 95px; height: auto; max-height: 95px; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));}
+.header-text h1{margin:0 0 8px;font-size:32px; letter-spacing: 0.5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);}
+.header-text p{margin:0;opacity:.95; font-size: 16px; color: #f3e8ff;}
+
+.container{max-width:1150px;margin:auto;padding:30px 16px}
+
+/* Loader Animation */
+.loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.85); z-index: 9999; display: none; align-items: center; justify-content: center; flex-direction: column; backdrop-filter: blur(3px);}
+.spinner { width: 50px; height: 50px; border: 5px solid #e9d5ff; border-top: 5px solid #7e22ce; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px;}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.loader-text { font-size: 18px; color: #3b0764; font-weight: 600; letter-spacing: 0.5px;}
+
+/* Auth Section Styles */
+#auth-section { display: block; margin-bottom: 40px; }
+#landing-panel { text-align: center; margin-top: 40px; margin-bottom: 50px; }
+#landing-panel h2 { font-size: 28px; color: #3b0764; margin-bottom: 10px;}
+#landing-panel p { color: #475569; font-size: 16px; margin-bottom: 30px;}
+.landing-options { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;}
+.landing-btn { padding: 15px 35px; font-size: 16px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
+.btn-primary { background: #7e22ce; color: white; }
+.btn-primary:hover { background: #581c87; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(126, 34, 206, 0.2);}
+.btn-outline { background: white; color: #7e22ce; border: 2px solid #7e22ce; }
+.btn-outline:hover { background: #f3e8ff; transform: translateY(-2px);}
+
+.auth-panel { background: #fff; border: none; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; max-width: 500px; margin: 0 auto; display: none;}
+.panel-header { padding: 18px 25px; border-bottom: 1px solid #e2e8f0; font-size: 18px; color: #3b0764; background-color: #faf5ff; font-weight: bold; text-align: center;}
+.panel-body { padding: 30px; }
+.auth-label { display: block; margin-bottom: 8px; font-size: 14px; color: #475569; font-weight: 600;}
+.auth-input { width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 20px; font-size: 14px; outline: none; transition: border-color 0.3s;}
+.auth-input:focus { border-color: #7e22ce; box-shadow: 0 0 0 3px rgba(126,34,206,0.1);}
+.req { color: #ef4444; }
+.auth-btn { width: 100%; background: #7e22ce; color: white; padding: 14px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600; margin-bottom: 15px; transition: background 0.3s;}
+.auth-btn:hover { background: #581c87; }
+.auth-note { font-size: 13px; color: #334155; margin-bottom: 20px; line-height: 1.6; background: #faf5ff; padding: 12px; border-left: 4px solid #7e22ce; border-radius: 0 6px 6px 0;}
+.toggle-link { text-align: center; font-size: 14px; color: #475569; margin-top: 10px;}
+.toggle-link a { color: #7e22ce; text-decoration: none; font-weight: bold; cursor: pointer;}
+.toggle-link a:hover { text-decoration: underline; color: #581c87;}
+
+.admin-link { text-align: center; margin-top: 50px; font-size: 13px;}
+.admin-link a { color: #94a3b8; cursor: pointer; text-decoration: none;}
+.admin-link a:hover { color: #3b0764; text-decoration: underline; }
+
+/* Main Application Section */
+#main-content, #admin-dashboard { display: none; }
+.card{background:#fff;border-radius:8px;padding:30px;margin-bottom:20px;box-shadow:0 4px 20px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;}
+
+/* Dashboard Styles */
+.dash-panel { border: 1px solid #d1d5db; border-radius: 4px; background: #fff; margin-bottom: 20px; overflow: hidden;}
+.dash-header { background-color: #f8fafc; padding: 12px 15px; border-bottom: 1px solid #d1d5db; color: #374151; font-size: 15px; font-weight: 600;}
+.dash-body { padding: 25px; }
+.dash-body p { margin-top: 0; color: #374151; font-size: 15px; line-height: 1.5;}
+.dash-body h3 { font-weight: normal; color: #111; font-size: 22px; margin: 15px 0 25px 0;}
+.btn-apply-now { background-color: #337ab7; color: white; border: 1px solid #2e6da4; padding: 10px 20px; font-size: 15px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;}
+.btn-apply-now:hover { background-color: #286090; }
+.samarth-footer { text-align: right; font-size: 14px; color: #337ab7; padding-top: 10px; margin-bottom: 30px;}
+
+/* Navbar */
+.user-navbar { background: #111; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 50px; margin-bottom: 25px; border-radius: 4px;}
+.user-navbar-left { display: flex; align-items: center; gap: 15px; }
+.user-navbar-left span { font-size: 15px; }
+.user-navbar-right { display: flex; align-items: center; gap: 20px; font-size: 14px;}
+.logout-text { color: #ef4444; cursor: pointer; font-weight: bold; text-decoration: none;}
+.logout-text:hover { text-decoration: underline; }
+
+/* Admin Dashboard Table */
+.admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px;}
+.admin-table th, .admin-table td { border: 1px solid #cbd5e1; padding: 12px; text-align: left; vertical-align: middle;}
+.admin-table th { background-color: #f1f5f9; color: #0f172a; font-weight: 600; }
+.admin-table tr:nth-child(even) { background-color: #f8fafc; }
+.status-badge { background: #10b981; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; display: inline-block;}
+.action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-view { background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background 0.2s;}
+.btn-view:hover { background: #2563eb; }
+.btn-delete { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background 0.2s;}
+.btn-delete:hover { background: #dc2626; }
+
+/* Form Styles */
+.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.formgrid label{font-weight:600;font-size:14px;display:block; color:#334155;}
+.formgrid input,.formgrid select,.formgrid textarea{width:100%;margin-top:8px;padding:12px;border:1px solid #cbd5e1;border-radius:6px;font-size:15px; background: #fff; outline:none; transition: border 0.3s;}
+.formgrid input:focus,.formgrid select:focus,.formgrid textarea:focus {border-color: #7e22ce;}
+.formgrid textarea{min-height:100px; resize: vertical;}
+.full{grid-column:1/-1}
+.actions{margin-top:25px;display:flex;gap:15px;flex-wrap:wrap; border-top: 1px solid #e2e8f0; padding-top: 25px;}
+.secondary{background:#e2e8f0;color:#334155;border:0;border-radius:6px;padding:12px 20px;font-weight:600;cursor:pointer; transition: background 0.3s;}
+.secondary:hover{background:#cbd5e1; color:#0f172a;}
+.apply{background:#7e22ce;color:#fff;width:100%;border:0;border-radius:6px;padding:12px 15px;font-weight:600;cursor:pointer; transition: background 0.3s;}
+.apply:hover{background:#3b0764;}
+.selected{display:inline-block;background:#faf5ff;color:#7e22ce;padding:8px 15px;border-radius:20px;font-weight:bold; font-size: 14px; border: 1px solid #e9d5ff;}
+
+.step-indicator { display: flex; justify-content: space-between; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; }
+.step-item { font-weight: 600; font-size: 14px; color: #94a3b8; }
+.step-item.active { color: #7e22ce; }
+
+/* Payment Section */
+#payment-section { display: none; text-align: center; }
+.qr-box { background: #faf5ff; padding: 25px; border-radius: 8px; border: 2px dashed #d8b4fe; display: inline-block; margin-bottom: 20px; max-width: 400px; width: 100%;}
+.pay-amount { color: #dc2626; font-size: 24px; font-weight: bold; margin: 0 0 15px; }
+.timer-text { font-size: 22px; color: #dc2626; font-weight: bold; margin-bottom: 15px; font-family: monospace; background: #fee2e2; padding: 5px 15px; border-radius: 20px; display: inline-block; border: 1px solid #fca5a5;}
+.pay-auth-container { max-width: 400px; margin: 0 auto 20px; text-align: left; background: #faf5ff; padding: 20px; border-radius: 8px; border: 1px solid #e9d5ff;}
+
+/* Payment Bottom Box & Captcha Styles */
+.payment-submit-box { max-width: 520px; margin: 5px auto 0; text-align: left; padding: 20px; background: #f8fafc; border-radius: 8px; border: 1px solid #cbd5e1; box-shadow: 0 2px 8px rgba(0,0,0,0.03);}
+.payment-info-lines { font-size: 13px; color: #92400e; background: #fffbeb; border-left: 4px solid #f59e0b; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; line-height: 1.6;}
+.captcha-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 15px;}
+.captcha-box { background: #e2e8f0; color: #1e293b; font-family: 'Courier New', monospace; font-size: 20px; font-weight: bold; letter-spacing: 5px; padding: 8px 16px; border-radius: 6px; border: 1px solid #94a3b8; user-select: none; text-decoration: line-through; background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(0,0,0,0.05) 5px, rgba(0,0,0,0.05) 10px);}
+.captcha-refresh { background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 12px; cursor: pointer; font-size: 16px; transition: background 0.2s;}
+.captcha-refresh:hover { background: #f1f5f9; }
+.captcha-input { flex: 1; min-width: 150px; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none;}
+.captcha-input:focus { border-color: #7e22ce; box-shadow: 0 0 0 3px rgba(126,34,206,0.1);}
+.final-btn-container { display: flex; justify-content: flex-end; border-top: 1px solid #e2e8f0; padding-top: 14px;}
+.btn-final-small { background: #059669; color: #fff; border: 0; border-radius: 6px; padding: 9px 20px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.3s; width: auto; box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);}
+.btn-final-small:hover { background: #047857; transform: translateY(-1px);}
+
+@media(max-width:850px){.formgrid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+
+<!-- Global Loader -->
+<div id="loader" class="loader-overlay">
+    <div class="spinner"></div>
+    <div class="loader-text" id="loader-text">Processing...</div>
+</div>
+
+<header>
+    <div class="header-content">
+        <img src="logo.png" alt="DU Logo" class="du-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/en/thumb/8/84/University_of_Delhi_seal.svg/1200px-University_of_Delhi_seal.svg.png'">
+        <div class="header-text">
+            <h1>Delhi University Recruitment 2026</h1>
+            <p>Official Online Application Portal</p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    
+    <!-- AUTHENTICATION SECTION -->
+    <div id="auth-section">
+        
+        <div id="landing-panel">
+            <h2>Welcome to Candidate Portal</h2>
+            <p>Please log in to continue or register if you are a new applicant.</p>
+            <div class="landing-options">
+                <button class="landing-btn btn-primary" onclick="showPanel('login-panel')">Applicant Login</button>
+                <button class="landing-btn btn-outline" onclick="showPanel('register-panel')">New Registration</button>
+            </div>
+            <div class="admin-link">
+                <a onclick="showPanel('admin-login-panel')">Admin Login Panel</a>
+            </div>
+        </div>
+
+        <div class="auth-panel" id="register-panel">
+            <div class="panel-header">New Candidate Registration</div>
+            <div class="panel-body">
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <label class="auth-label">Applicant Name <span class="req">*</span></label>
+                    <input type="text" id="regName" class="auth-input" placeholder="Enter Full Name" required>
+
+                    <label class="auth-label">Email Address <span class="req">*</span></label>
+                    <input type="email" id="regEmail" class="auth-input" placeholder="Applicant's Email" required>
+
+                    <label class="auth-label">Confirm Email <span class="req">*</span></label>
+                    <input type="email" id="regConfirmEmail" class="auth-input" placeholder="Confirm Email" required>
+
+                    <label class="auth-label">Password <span class="req">*</span></label>
+                    <input type="password" id="regPassword" class="auth-input" placeholder="Minimum 6 characters" minlength="6" required>
+
+                    <label class="auth-label">Confirm Password <span class="req">*</span></label>
+                    <input type="password" id="regConfirmPassword" class="auth-input" placeholder="Confirm Password" required>
+
+                    <label class="auth-label">Mobile Number <span class="req">*</span></label>
+                    <input type="tel" id="regMobile" class="auth-input" placeholder="10-digit Mobile No." pattern="[0-9]{10}" required>
+
+                    <div class="auth-note">
+                        <b>Note:</b> One Email and Mobile number can only be registered once. Please ensure details are correct.
+                    </div>
+
+                    <button type="submit" class="auth-btn">Register Account</button>
+                    <div class="toggle-link">
+                        Already registered? <a onclick="showPanel('login-panel')">Login here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="auth-panel" id="login-panel" style="max-width: 450px;">
+            <div class="panel-header">Registered Candidate Login</div>
+            <div class="panel-body">
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <label class="auth-label">Registered Email or Mobile No. <span class="req">*</span></label>
+                    <input type="text" id="loginId" class="auth-input" placeholder="Enter Email or Mobile" required>
+
+                    <label class="auth-label">Password <span class="req">*</span></label>
+                    <input type="password" id="loginPassword" class="auth-input" placeholder="Enter your password" required>
+
+                    <button type="submit" class="auth-btn">Login to Dashboard</button>
+                    <div class="toggle-link">
+                        Don't have an account? <a onclick="showPanel('register-panel')">Register Now</a><br><br>
+                        <a onclick="showPanel('landing-panel')" style="color:#64748b;">&larr; Back to Home</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="auth-panel" id="admin-login-panel" style="max-width: 450px;">
+            <div class="panel-header" style="background:#0f172a; color:#fff;">Admin Control Panel</div>
+            <div class="panel-body">
+                <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                    <label class="auth-label">Admin ID <span class="req">*</span></label>
+                    <input type="email" id="adminId" class="auth-input" placeholder="Enter Admin ID" required>
+
+                    <label class="auth-label">Admin Password <span class="req">*</span></label>
+                    <input type="password" id="adminPass" class="auth-input" placeholder="Enter password" required>
+
+                    <button type="submit" class="auth-btn" style="background:#0f172a;">Secure Login</button>
+                    <div class="toggle-link">
+                        <a onclick="showPanel('landing-panel')" style="color:#64748b;">&larr; Back to Home</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ADMIN DASHBOARD SECTION -->
+    <div id="admin-dashboard">
+        <div class="user-navbar" style="background: #0f172a;">
+            <div class="user-navbar-left">
+                <span style="font-size:18px;">🛡️</span>
+                <span>Admin Central Dashboard</span>
+            </div>
+            <div class="user-navbar-right">
+                <span style="color: #93c5fd;">deep870@du.in</span>
+                <a class="logout-text" onclick="logout()">Logout Admin</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 style="margin-top:0; color:#0f172a;">Registered Applications (Real-Time)</h2>
+            <p style="color:#64748b;">Below is the list of candidates who have successfully completed their fee payment. You can view/print their full application form or delete records.</p>
+            
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>App No.</th>
+                            <th>Candidate Name</th>
+                            <th>Applied Post</th>
+                            <th>Category</th>
+                            <th>Mobile</th>
+                            <th>Payment Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-table-body">
+                        <!-- Dynamic Rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APPLICATION SECTION -->
+    <div id="main-content">
+        <!-- Navbar -->
+        <div class="user-navbar">
+            <div class="user-navbar-left">
+                <span style="font-size:18px;">🏠</span>
+                <span>Recruitment Portal</span>
+            </div>
+            <div class="user-navbar-right">
+                <span>Important Information ▾</span>
+                <span>|</span>
+                <span id="loggedInEmail" style="color: #93c5fd;"></span>
+                <a class="logout-text" onclick="logout()">Logout</a>
+            </div>
+        </div>
+
+        <!-- 1. DASHBOARD INTRO VIEW -->
+        <div id="dashboard-view">
+            <div class="dash-panel">
+                <div class="dash-header">Notifications</div>
+                <div class="dash-body">
+                    <p>Welcome to the University of Delhi<br>This is your personalized dashboard to keep a track of your application(s) process.</p>
+                    <h3>Please read guidelines carefully before filling up the form.</h3>
+                    <button class="btn-apply-now" onclick="openPostSelection()">Apply Now &raquo;</button>
+                </div>
+            </div>
+
+            <div class="dash-panel">
+                <div class="dash-header" style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:16px;">👤</span> Hello <span id="helloName"></span>!
+                </div>
+                <div class="dash-body" style="padding: 15px 25px;">
+                    <strong style="font-size: 15px; color: #111;">You have not yet applied for any position. Please click on Apply Now button to apply for post.</strong>
+                </div>
+            </div>
+            
+            <div class="samarth-footer">&copy; Samarth e-Gov Powered By IIC,UDSC</div>
+        </div>
+
+        <!-- 2. POST SELECTION DROPDOWN VIEW -->
+        <div id="post-selection-view" class="card" style="display:none; text-align:center; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: #337ab7; margin-top:0;">Select Post for Application</h2>
+            <p style="color: #64748b; margin-bottom: 25px;">Choose the position you wish to apply for from the list below.</p>
+            
+            <div style="text-align: left; margin-bottom: 25px;">
+                <label style="font-weight: 600; color: #374151; display: block; margin-bottom: 8px;">Available Posts <span class="req">*</span></label>
+                <select id="postDropdown" class="auth-input" style="font-size: 16px; padding: 14px; border: 2px solid #cbd5e1;">
+                    <option value="">-- Click to Select Post --</option>
+                    <option value="Lower Division Clerk (LDC)">Lower Division Clerk (LDC)</option>
+                    <option value="Upper Division Clerk (UDC)">Upper Division Clerk (UDC)</option>
+                    <option value="Assistant Grade II">Assistant Grade II</option>
+                    <option value="Library Attendant / Librarian">Library Attendant / Librarian</option>
+                    <option value="Data Entry Operator (DEO)">Data Entry Operator (DEO)</option>
+                    <option value="Science Lab Attendant">Science Lab Attendant</option>
+                    <option value="Multi Tasking Staff (MTS)">Multi Tasking Staff (MTS)</option>
+                    <option value="Other Non-Teaching Staff">Other Non-Teaching Staff</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="secondary" onclick="backToDashboard()">Cancel</button>
+                <button class="apply" style="width: auto; padding: 12px 30px;" onclick="startApplication()">Proceed to Form</button>
+            </div>
+        </div>
+
+        <!-- 3. DETAILED APPLICATION FORM -->
+        <section id="application" class="card" style="display: none;">
+            <h2>Detailed Application Form</h2>
+            <p style="margin-bottom:15px;">Applying for: <span id="selectedPost" class="selected"></span></p>
+            
+            <div class="step-indicator">
+                <span id="ind-1" class="step-item active">1. Personal Details</span>
+                <span id="ind-2" class="step-item">2. Address Details</span>
+                <span id="ind-3" class="step-item">3. Education & Documents</span>
+            </div>
+
+            <form id="form">
+                <!-- STEP 1: PERSONAL DETAILS -->
+                <div id="form-step-1" class="form-step">
+                    <h3 style="color:#3b0764; margin-top:0; margin-bottom:20px; border-bottom:2px solid #e2e8f0; padding-bottom:8px;">Personal Information</h3>
+                    <div class="formgrid">
+                        <div><label>Candidate Full Name *</label><input id="formName" required readonly style="background:#f8fafc; cursor:not-allowed;"></div>
+                        <div><label>Father's / Husband's Name *</label><input id="formFName" placeholder="Guardian Name" required></div>
+                        <div><label>Date of Birth *</label><input type="date" id="formDOB" required></div>
+                        <div><label>Gender *</label><select id="formGender" required><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Transgender</option></select></div>
+                        
+                        <!-- MARITAL STATUS -->
+                        <div><label>Marital Status *</label>
+                            <select id="formMarital" required>
+                                <option value="">Select Status</option>
+                                <option>Unmarried</option>
+                                <option>Married</option>
+                                <option>Widow</option>
+                            </select>
+                        </div>
+
+                        <div><label>Category *</label><select id="formCategory" required><option value="">Select Category</option><option>UR (General)</option><option>OBC-NCL</option><option>SC</option><option>ST</option><option>EWS</option><option>PwBD</option></select></div>
+                        <div><label>Aadhar Number *</label><input type="tel" id="formAadhar" maxlength="12" pattern="[0-9]{12}" placeholder="12-digit UID" required></div>
+                        <div><label>Mobile Number *</label><input type="tel" id="formMobile" required readonly style="background:#f8fafc; cursor:not-allowed;"></div>
+                        <div><label>Email Address *</label><input type="email" id="formEmail" required readonly style="background:#f8fafc; cursor:not-allowed;"></div>
+                    </div>
+                    <div class="actions">
+                        <button class="apply" type="button" onclick="nextStep(1)">Save & Next &rarr;</button>
+                        <button class="secondary" type="button" onclick="backToDashboard()">Cancel / Close</button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: ADDRESS DETAILS WITH MANUAL STATE AND DISTRICT -->
+                <div id="form-step-2" class="form-step" style="display:none;">
+                    <h3 style="color:#3b0764; margin-top:0; margin-bottom:20px; border-bottom:2px solid #e2e8f0; padding-bottom:8px;">Address Information</h3>
+                    
+                    <div class="full" style="margin-bottom: 15px;">
+                        <h4 style="color:#7e22ce; margin:0 0 10px;">Correspondence Address</h4>
+                    </div>
+                    <div class="formgrid" id="corrAddressFields">
+                        <div><label>House No. / Flat No. *</label><input type="text" id="corrHouse" placeholder="House No." required></div>
+                        <div><label>Street / Colony / Village *</label><input type="text" id="corrColony" placeholder="Colony/Village" required></div>
+                        <div><label>Post Office</label><input type="text" id="corrPO" placeholder="Post Office"></div>
+                        
+                        <!-- Manual State Dropdown -->
+                        <div><label>State *</label>
+                            <select id="corrState" required>
+                                <option value="">Select State</option>
+                                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chandigarh">Chandigarh</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Ladakh">Ladakh</option>
+                                <option value="Lakshadweep">Lakshadweep</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Manipur">Manipur</option>
+                                <option value="Meghalaya">Meghalaya</option>
+                                <option value="Mizoram">Mizoram</option>
+                                <option value="Nagaland">Nagaland</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Puducherry">Puducherry</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Sikkim">Sikkim</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Telangana">Telangana</option>
+                                <option value="Tripura">Tripura</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="West Bengal">West Bengal</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Manual District Input -->
+                        <div><label>District *</label>
+                            <input type="text" id="corrDist" placeholder="Type your District Name" required>
+                        </div>
+
+                        <div><label>Pincode *</label><input type="text" id="corrPin" pattern="[0-9]{6}" placeholder="6-digit Pincode" required></div>
+                    </div>
+                    
+                    <div class="full" style="margin: 20px 0 10px; background:#faf5ff; padding:10px; border-radius:6px; border:1px solid #e9d5ff;">
+                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:normal; margin:0;">
+                            <input type="checkbox" id="sameAddressCheck" onclick="toggleSameAddress()" style="width:18px; height:18px;">
+                            <strong>Permanent Address is same as Correspondence Address</strong>
+                        </label>
+                    </div>
+
+                    <div class="full" style="margin-bottom: 15px;">
+                        <h4 style="color:#7e22ce; margin:0 0 10px;">Permanent Address</h4>
+                    </div>
+                    <div class="formgrid" id="permAddressFields">
+                        <div><label>House No. / Flat No. *</label><input type="text" id="permHouse" placeholder="House No." required></div>
+                        <div><label>Street / Colony / Village *</label><input type="text" id="permColony" placeholder="Colony/Village" required></div>
+                        <div><label>Post Office</label><input type="text" id="permPO" placeholder="Post Office"></div>
+                        
+                        <!-- Permanent State Dropdown -->
+                        <div><label>State *</label>
+                            <select id="permState" required>
+                                <option value="">Select State</option>
+                                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chandigarh">Chandigarh</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Ladakh">Ladakh</option>
+                                <option value="Lakshadweep">Lakshadweep</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Manipur">Manipur</option>
+                                <option value="Meghalaya">Meghalaya</option>
+                                <option value="Mizoram">Mizoram</option>
+                                <option value="Nagaland">Nagaland</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Puducherry">Puducherry</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Sikkim">Sikkim</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Telangana">Telangana</option>
+                                <option value="Tripura">Tripura</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="West Bengal">West Bengal</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Permanent District Input -->
+                        <div><label>District *</label>
+                            <input type="text" id="permDist" placeholder="Type your District Name" required>
+                        </div>
+
+                        <div><label>Pincode *</label><input type="text" id="permPin" pattern="[0-9]{6}" placeholder="6-digit Pincode" required></div>
+                    </div>
+
+                    <div class="actions">
+                        <button class="secondary" type="button" onclick="prevStep(2)">&larr; Back</button>
+                        <button class="apply" type="button" onclick="nextStep(2)">Save & Next &rarr;</button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: EDUCATIONAL QUALIFICATIONS & DOCUMENTS -->
+                <div id="form-step-3" class="form-step" style="display:none;">
+                    <h3 style="color:#3b0764; margin-top:0; margin-bottom:15px; border-bottom:2px solid #e2e8f0; padding-bottom:8px;">Educational Qualifications</h3>
+                    <div class="formgrid">
+                        <div><label>10th Board / University *</label><input id="board10" placeholder="e.g. CBSE, State Board" required></div>
+                        <div><label>10th Passing Year & Percentage *</label>
+                            <div style="display:flex; gap:10px;">
+                                <input type="number" id="year10" placeholder="Year" min="1950" max="2030" required style="margin-top:8px; flex:1;">
+                                <input id="perc10" placeholder="Percentage (%)" required style="margin-top:8px; flex:1;">
+                            </div>
+                        </div>
+                        <div><label>12th Board / University</label><input id="board12" placeholder="e.g. CBSE, State Board"></div>
+                        <div><label>12th Passing Year & Percentage</label>
+                            <div style="display:flex; gap:10px;">
+                                <input type="number" id="year12" placeholder="Year" min="1950" max="2030" style="margin-top:8px; flex:1;">
+                                <input id="perc12" placeholder="Percentage (%)" style="margin-top:8px; flex:1;">
+                            </div>
+                        </div>
+                        <div><label>Graduation / Other Degree</label><input id="boardGrad" placeholder="e.g. B.A., B.Sc., B.Com"></div>
+                        <div><label>Passing Year & Percentage</label>
+                            <div style="display:flex; gap:10px;">
+                                <input type="number" id="yearGrad" placeholder="Year" min="1950" max="2030" style="margin-top:8px; flex:1;">
+                                <input id="percGrad" placeholder="Percentage (%)" style="margin-top:8px; flex:1;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="full" style="margin-top:20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 5px;">
+                        <h3 style="color:#3b0764;margin:0">Document Uploads</h3>
+                    </div>
+                    <div class="formgrid">
+                        <div><label>Candidate Passport Photo * <span style="font-weight:normal; font-size:12px; color:#64748b;">(JPG/PNG only)</span></label><input type="file" id="formPhoto" accept="image/*" required></div>
+                        <div><label>Candidate Signature * <span style="font-weight:normal; font-size:12px; color:#64748b;">(JPG/PNG only)</span></label><input type="file" id="formSignature" accept="image/*" required></div>
+                        <div><label>10th Marksheet / Certificate</label><input type="file" accept=".pdf,image/*"></div>
+                        <div><label>12th Marksheet / Certificate</label><input type="file" accept=".pdf,image/*"></div>
+                        <div><label>Highest Qualification Document</label><input type="file" accept=".pdf,image/*"></div>
+                        <div><label>Identity Proof (Aadhar/PAN/Voter ID)</label><input type="file" accept=".pdf,image/*"></div>
+                        <div><label>Category Certificate (if applicable)</label><input type="file" accept=".pdf,image/*"></div>
+                    </div>
+                    
+                    <div class="full" style="background: #faf5ff; padding: 15px; border-radius: 6px; border: 1px solid #e9d5ff; margin-top: 15px;">
+                        <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;">
+                            <input type="checkbox" id="declareCheck" required style="width:18px; height:18px; margin-top: 0;"> 
+                            <span style="font-weight:normal; line-height:1.4;">I hereby declare that all the information and documents provided by me are correct. I understand the application fee is non-refundable.</span>
+                        </label>
+                    </div>
+
+                    <div class="actions">
+                        <button class="secondary" type="button" onclick="prevStep(3)">&larr; Back</button>
+                        <button class="apply" type="button" onclick="submitApplication()" style="background:#059669;">Submit Form & Proceed to Payment</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- 4. PAYMENT SECTION -->
+        <section id="payment-section" class="card" style="display: none;">
+            <h2>Application Fee Payment</h2>
+            <div id="payment-auth-box">
+                <p style="color:#64748b; margin-bottom: 20px;">For security reasons, please verify your credentials to proceed to the payment gateway.</p>
+                <div class="pay-auth-container">
+                    <label class="auth-label">Registered Email or Mobile No. <span class="req">*</span></label>
+                    <input type="text" id="payAuthId" class="auth-input" placeholder="Enter Email or Mobile" required>
+                    <label class="auth-label">Password <span class="req">*</span></label>
+                    <input type="password" id="payAuthPass" class="auth-input" placeholder="Enter your password" required>
+                    <button onclick="verifyPaymentAuth()" class="auth-btn" style="margin-bottom: 0;">Verify & Proceed</button>
+                </div>
+            </div>
+
+            <div id="payment-qr-box" style="display: none;">
+                <p style="color:#64748b; margin-bottom: 15px;">Please scan the QR code below from any UPI app to complete your application fee payment.</p>
+                <div class="timer-text">Time Remaining: <span id="pay-timer">10:00</span></div><br>
+                <div class="qr-box">
+                    <div class="pay-amount">Amount to Pay: ₹ 500/-</div>
+                    <img src="qr.jpeg" alt="Scan to Pay - DU Recruitment" style="width:100%; max-width:200px; height:auto; border-radius: 12px; margin-bottom: 15px;">
+                    <p style="font-weight:bold; color:#3b0764; margin: 5px 0 5px;">Scan & Pay via UPI</p>
+                    <p style="font-size:13px; color:#64748b; margin:0;">(GPay, PhonePe, Paytm, BHIM)</p>
+                </div>
+
+                <!-- Updated Payment Instructions, Captcha & Smaller Side-Aligned Button -->
+                <div class="payment-submit-box">
+                    <div class="payment-info-lines">
+                        <strong>Important Payment Guidelines:</strong><br>
+                        • Please do not refresh, press back, or close this window while making the payment.<br>
+                        • Ensure that the fee of <b>₹500</b> is successfully deducted from your bank/UPI app before submitting.<br>
+                        • After payment, enter the security Captcha code below to generate your final PDF receipt.
+                    </div>
+
+                    <label style="font-size: 13px; font-weight: 600; color: #334155; display: block; margin-bottom: 6px;">Security Verification (Captcha) <span class="req">*</span></label>
+                    <div class="captcha-row">
+                        <div id="captcha-display" class="captcha-box"></div>
+                        <button type="button" class="captcha-refresh" onclick="generateCaptcha()" title="Refresh Captcha">🔄</button>
+                        <input type="text" id="captcha-input" class="captcha-input" placeholder="Enter Captcha Code" required>
+                    </div>
+
+                    <div class="final-btn-container">
+                        <button onclick="finishProcess()" class="btn-final-small">Final Submit & Download PDF &raquo;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+// ================= INITIALIZATION & AUTHENTICATION =================
+let registeredUsers = JSON.parse(localStorage.getItem('du_users')) || []; 
+let submittedApplications = JSON.parse(localStorage.getItem('du_applications')) || [];
+let currentUser = JSON.parse(localStorage.getItem('du_current_user')) || null; 
+let appData = {}; 
+let countdownInterval;
+let currentCaptcha = "";
+
+window.onload = function() {
+    if(currentUser) { showDashboard(); } else { showPanel('landing-panel'); }
+};
+
+function generateCaptcha() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
+    let captcha = "";
+    for (let i = 0; i < 6; i++) {
+        captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    currentCaptcha = captcha;
+    const display = document.getElementById("captcha-display");
+    if (display) display.textContent = captcha;
+    const input = document.getElementById("captcha-input");
+    if (input) input.value = "";
+}
+
+function showLoader(callback, text="Processing...", delay=1200) {
+    document.getElementById('loader-text').innerText = text;
+    document.getElementById('loader').style.display = 'flex';
+    setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        if(callback) callback();
+    }, delay);
+}
+
+function showPanel(panelId) {
+    document.getElementById('landing-panel').style.display = 'none';
+    document.getElementById('register-panel').style.display = 'none';
+    document.getElementById('login-panel').style.display = 'none';
+    document.getElementById('admin-login-panel').style.display = 'none';
+    if(panelId) document.getElementById(panelId).style.display = 'block';
+}
+
+function showDashboard() {
+    document.getElementById("auth-section").style.display = "none";
+    document.getElementById("admin-dashboard").style.display = "none";
+    document.getElementById("main-content").style.display = "block";
+    
+    document.getElementById("helloName").textContent = currentUser.name.split(" ")[0]; 
+    document.getElementById("loggedInEmail").textContent = currentUser.email;
+    
+    document.getElementById("formName").value = currentUser.name;
+    document.getElementById("formEmail").value = currentUser.email;
+    document.getElementById("formMobile").value = currentUser.mobile;
+
+    document.getElementById("dashboard-view").style.display = "block";
+    document.getElementById("post-selection-view").style.display = "none";
+    document.getElementById("application").style.display = "none";
+    document.getElementById("payment-section").style.display = "none";
+}
+
+function openPostSelection() {
+    document.getElementById("dashboard-view").style.display = "none";
+    document.getElementById("post-selection-view").style.display = "block";
+    document.getElementById("postDropdown").value = ""; 
+}
+
+function backToDashboard() {
+    showDashboard();
+}
+
+function startApplication() {
+    const selected = document.getElementById("postDropdown").value;
+    if(!selected) {
+        alert("Please select a post from the list first!");
+        return;
+    }
+    document.getElementById("selectedPost").textContent = selected;
+    
+    document.getElementById("post-selection-view").style.display = "none";
+    document.getElementById("application").style.display = "block";
+    
+    document.getElementById("form-step-1").style.display = "block";
+    document.getElementById("form-step-2").style.display = "none";
+    document.getElementById("form-step-3").style.display = "none";
+    document.getElementById("ind-1").className = "step-item active";
+    document.getElementById("ind-2").className = "step-item";
+    document.getElementById("ind-3").className = "step-item";
+    document.getElementById("application").scrollIntoView({behavior:"smooth"});
+}
+
+function handleRegister(e) {
+    e.preventDefault(); 
+    const name = document.getElementById("regName").value;
+    const email = document.getElementById("regEmail").value;
+    const password = document.getElementById("regPassword").value;
+    const mobile = document.getElementById("regMobile").value;
+    
+    if(email !== document.getElementById("regConfirmEmail").value || password !== document.getElementById("regConfirmPassword").value) {
+        alert("Error: Email or Password confirmation does not match!"); return;
+    }
+
+    const exists = registeredUsers.find(user => user.email === email || user.mobile === mobile);
+    if(exists) {
+        alert("WARNING: This Email or Mobile Number is ALREADY REGISTERED! Please go to the Login page instead.");
+        return;
+    }
+
+    showLoader(() => {
+        registeredUsers.push({ name, email, password, mobile });
+        localStorage.setItem('du_users', JSON.stringify(registeredUsers));
+        alert("Registration Successful! Please login using your Email/Mobile and Password.");
+        
+        document.getElementById("registerForm").reset();
+        showPanel('login-panel'); 
+        document.getElementById("loginId").value = email; 
+    }, "Registering Account...");
+}
+
+function handleLogin(e) {
+    e.preventDefault(); 
+    const loginId = document.getElementById("loginId").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    showLoader(() => {
+        currentUser = registeredUsers.find(user => 
+            (user.email === loginId || user.mobile === loginId) && user.password === password
+        );
+
+        if(currentUser) {
+            localStorage.setItem('du_current_user', JSON.stringify(currentUser));
+            showDashboard();
+        } else {
+            alert("Invalid Email/Mobile or Password! Please register first if you don't have an account.");
+        }
+    }, "Authenticating User...");
+}
+
+/* ================= ADMIN LOGIN & DASHBOARD ================= */
+function handleAdminLogin(e) {
+    e.preventDefault();
+    const id = document.getElementById("adminId").value.trim();
+    const pass = document.getElementById("adminPass").value;
+
+    showLoader(() => {
+        if(id === "deep870@du.in" && pass === "Deep@123") {
+            loadAdminDashboard();
+        } else {
+            alert("Unauthorized Access! Incorrect Admin Credentials.");
+        }
+    }, "Verifying Admin Security...", 1500);
+}
+
+function loadAdminDashboard() {
+    document.getElementById("auth-section").style.display = "none";
+    document.getElementById("main-content").style.display = "none";
+    document.getElementById("admin-dashboard").style.display = "block";
+
+    const tbody = document.getElementById("admin-table-body");
+    tbody.innerHTML = "";
+
+    if(submittedApplications.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='7' style='text-align:center; color:#64748b;'>No applications registered yet.</td></tr>";
+    } else {
+        submittedApplications.forEach((app, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td><b>${app.appNo}</b></td>
+                    <td>${app.name}</td>
+                    <td>${app.post}</td>
+                    <td>${app.category}</td>
+                    <td>${app.mobile}</td>
+                    <td><span class="status-badge">Fee Paid</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-view" onclick="viewApplication(${index})">🖨️ View / Print</button>
+                            <button class="btn-delete" onclick="deleteApplication(${index})">🗑️ Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+}
+
+function viewApplication(index) {
+    const app = submittedApplications[index];
+    if (!app) return;
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+        alert("Pop-up blocked! Please allow popups for this site to view the PDF Receipt.");
+        return;
+    }
+    printWindow.document.write(getReceiptHTML(app));
+    printWindow.document.close();
+}
+
+function deleteApplication(index) {
+    if (confirm("Are you sure you want to delete this candidate's application?")) {
+        submittedApplications.splice(index, 1);
+        localStorage.setItem('du_applications', JSON.stringify(submittedApplications));
+        loadAdminDashboard();
+    }
+}
+
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('du_current_user'); 
+    clearInterval(countdownInterval);
+    document.getElementById("main-content").style.display = "none";
+    document.getElementById("admin-dashboard").style.display = "none";
+    document.getElementById("auth-section").style.display = "block";
+    document.getElementById("loginForm").reset();
+    document.getElementById("adminLoginForm").reset();
+    showPanel('landing-panel'); 
+}
+
+// ================= FORM NAVIGATION =================
+function nextStep(current) {
+    if (current === 1) {
+        const fname = document.getElementById("formFName").value;
+        const dob = document.getElementById("formDOB").value;
+        const gender = document.getElementById("formGender").value;
+        const marital = document.getElementById("formMarital").value;
+        const category = document.getElementById("formCategory").value;
+        const aadhar = document.getElementById("formAadhar").value;
+
+        if (!fname || !dob || !gender || !marital || !category || !aadhar) { 
+            alert("Please fill out all required fields."); return; 
+        }
+        if (aadhar.length !== 12 || isNaN(aadhar)) { 
+            alert("Please enter a valid 12-digit Aadhar number."); return; 
+        }
+
+        document.getElementById("form-step-1").style.display = "none";
+        document.getElementById("form-step-2").style.display = "block";
+        document.getElementById("ind-1").className = "step-item";
+        document.getElementById("ind-2").className = "step-item active";
+    } else if (current === 2) {
+        const corrFields = ["corrHouse", "corrColony", "corrState", "corrDist", "corrPin"];
+        const permFields = ["permHouse", "permColony", "permState", "permDist", "permPin"];
+        let valid = true;
+        [...corrFields, ...permFields].forEach(id => { if(!document.getElementById(id).value) valid = false; });
+        if(!valid) { alert("Please fill out all required address fields."); return; }
+
+        document.getElementById("form-step-2").style.display = "none";
+        document.getElementById("form-step-3").style.display = "block";
+        document.getElementById("ind-2").className = "step-item";
+        document.getElementById("ind-3").className = "step-item active";
+    }
+}
+
+function prevStep(current) {
+    if (current === 2) {
+        document.getElementById("form-step-2").style.display = "none";
+        document.getElementById("form-step-1").style.display = "block";
+        document.getElementById("ind-2").className = "step-item";
+        document.getElementById("ind-1").className = "step-item active";
+    } else if (current === 3) {
+        document.getElementById("form-step-3").style.display = "none";
+        document.getElementById("form-step-2").style.display = "block";
+        document.getElementById("ind-3").className = "step-item";
+        document.getElementById("ind-2").className = "step-item active";
+    }
+}
+
+function toggleSameAddress() {
+    const isChecked = document.getElementById("sameAddressCheck").checked;
+    
+    const textFields = ['House', 'Colony', 'PO', 'Dist', 'Pin'];
+    textFields.forEach(field => {
+        const corrField = document.getElementById("corr" + field);
+        const permField = document.getElementById("perm" + field);
+        if (isChecked) {
+            permField.value = corrField.value; 
+            permField.readOnly = true; 
+            permField.style.background = "#f8fafc";
+        } else {
+            permField.readOnly = false; 
+            permField.style.background = "#fff";
+        }
+    });
+
+    const corrState = document.getElementById("corrState");
+    const permState = document.getElementById("permState");
+
+    if(isChecked) {
+        permState.value = corrState.value;
+        permState.style.pointerEvents = "none"; 
+        permState.style.background = "#f8fafc";
+    } else {
+        permState.style.pointerEvents = "auto"; 
+        permState.style.background = "#fff";
+    }
+}
+
+// ================= MANUAL FORM SUBMISSION FIX (READ PHOTO & SIGNATURE) =================
+function submitApplication() {
+    const board10 = document.getElementById("board10").value;
+    const year10 = document.getElementById("year10").value;
+    const perc10 = document.getElementById("perc10").value;
+    const photoFile = document.getElementById("formPhoto").files[0];
+    const signFile = document.getElementById("formSignature").files[0];
+    const declare = document.getElementById("declareCheck").checked;
+
+    if(!board10 || !year10 || !perc10) {
+        alert("Please fill out your 10th standard qualification details.");
+        return;
+    }
+    if(!photoFile || !signFile) {
+        alert("Please upload both Photo and Signature.");
+        return;
+    }
+    if(!declare) {
+        alert("Please check the declaration box to proceed.");
+        return;
+    }
+
+    showLoader(() => {
+        const readerPhoto = new FileReader();
+        const readerSign = new FileReader();
+
+        readerPhoto.onload = function(eventPhoto) {
+            readerSign.onload = function(eventSign) {
+                const corrAddressFormatted = `Vill/Flat: ${document.getElementById("corrHouse").value},<br>Street: ${document.getElementById("corrColony").value},<br>PO: ${document.getElementById("corrPO").value || 'N/A'},<br>Dist: ${document.getElementById("corrDist").value}, ${document.getElementById("corrState").value} - ${document.getElementById("corrPin").value}`;
+                
+                const permAddressFormatted = `Vill/Flat: ${document.getElementById("permHouse").value},<br>Street: ${document.getElementById("permColony").value},<br>PO: ${document.getElementById("permPO").value || 'N/A'},<br>Dist: ${document.getElementById("permDist").value}, ${document.getElementById("permState").value} - ${document.getElementById("permPin").value}`;
+
+                const uniqueAppNo = "DU26" + Date.now().toString().slice(-6);
+
+                appData = {
+                    appNo: uniqueAppNo,
+                    photoData: eventPhoto.target.result,
+                    signData: eventSign.target.result,
+                    post: document.getElementById("selectedPost").textContent,
+                    name: document.getElementById("formName").value,
+                    fname: document.getElementById("formFName").value,
+                    dob: document.getElementById("formDOB").value,
+                    gender: document.getElementById("formGender").value,
+                    marital: document.getElementById("formMarital").value,
+                    category: document.getElementById("formCategory").value,
+                    mobile: document.getElementById("formMobile").value,
+                    email: document.getElementById("formEmail").value,
+                    aadhar: document.getElementById("formAadhar").value,
+                    addressCorr: corrAddressFormatted,
+                    addressPerm: permAddressFormatted,
+                    board10: document.getElementById("board10").value,
+                    year10: document.getElementById("year10").value,
+                    perc10: document.getElementById("perc10").value,
+                    board12: document.getElementById("board12").value || "N/A",
+                    year12: document.getElementById("year12").value || "-",
+                    perc12: document.getElementById("perc12").value || "-",
+                    boardGrad: document.getElementById("boardGrad").value || "N/A",
+                    yearGrad: document.getElementById("yearGrad").value || "-",
+                    percGrad: document.getElementById("percGrad").value || "-"
+                };
+                
+                document.getElementById("application").style.display = "none";
+                const paymentSec = document.getElementById("payment-section");
+                paymentSec.style.display = "block";
+                document.getElementById("payment-auth-box").style.display = "block";
+                document.getElementById("payment-qr-box").style.display = "none";
+                
+                document.getElementById("payAuthId").value = currentUser.email;
+                document.getElementById("payAuthPass").value = "";
+                paymentSec.scrollIntoView({behavior:"smooth"});
+            };
+            readerSign.readAsDataURL(signFile);
+        };
+        readerPhoto.readAsDataURL(photoFile);
+    }, "Uploading Documents...");
+}
+
+function verifyPaymentAuth() {
+    const authId = document.getElementById("payAuthId").value.trim();
+    const authPass = document.getElementById("payAuthPass").value;
+
+    showLoader(() => {
+        if((authId === currentUser.email || authId === currentUser.mobile) && authPass === currentUser.password) {
+            document.getElementById("payment-auth-box").style.display = "none";
+            document.getElementById("payment-qr-box").style.display = "block";
+            generateCaptcha();
+            startPaymentTimer(10 * 60); 
+        } else {
+            alert("Authentication failed! Incorrect Username or Password.");
+        }
+    }, "Securing Payment Gateway...");
+}
+
+function startPaymentTimer(duration) {
+    let timer = duration, minutes, seconds;
+    const display = document.getElementById('pay-timer');
+    clearInterval(countdownInterval);
+    countdownInterval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10); seconds = parseInt(timer % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes; seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = minutes + ":" + seconds;
+        if (--timer < 0) {
+            clearInterval(countdownInterval);
+            alert("Payment session expired! Please verify your credentials again to retry.");
+            document.getElementById("payment-qr-box").style.display = "none";
+            document.getElementById("payment-auth-box").style.display = "block";
+            document.getElementById("payAuthPass").value = "";
+        }
+    }, 1000);
+}
+
+// ================= FINAL PDF PRINT RECEIPT =================
+function getReceiptHTML(data) {
+    const maskedAadhar = data.aadhar;
+    
+    let dobFormatted = data.dob;
+    if(dobFormatted){
+        const parts = dobFormatted.split("-");
+        dobFormatted = `${parts[2]}-${parts[1]}-${parts[0]}`; 
+    }
+    
+    let ageText = "N/A";
+    if(data.dob){
+        const dobDate = new Date(data.dob);
+        const diff_ms = Date.now() - dobDate.getTime();
+        const age_dt = new Date(diff_ms); 
+        const year = Math.abs(age_dt.getUTCFullYear() - 1970);
+        ageText = `${year} Years`;
+    }
+
+    const signatureImgHTML = data.signData 
+        ? `<img src="${data.signData}" alt="Signature" class="sign-img"><div class="media-label">CANDIDATE SIGNATURE</div>`
+        : `<div style="height:50px; border:1px dashed #aaa; display:flex; align-items:center; justify-content:center; font-size:11px; color:#777;">No Signature</div>`;
+
+    return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Application Form - ${data.appNo}</title>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+                body { 
+                    font-family: 'Roboto', Arial, sans-serif; 
+                    padding: 20px 40px; 
+                    color: #000; 
+                    max-width: 950px; 
+                    margin: auto; 
+                    background: #fff;
+                    font-size: 13px;
+                }
+                .print-btn { 
+                    display: block; 
+                    width: 100%; 
+                    background: #3b0764; 
+                    color: white; 
+                    padding: 10px; 
+                    border: none; 
+                    cursor: pointer; 
+                    font-size: 16px; 
+                    margin-bottom: 20px; 
+                }
+                
+                .form-container {
+                    border: 1px solid #000;
+                    padding: 2px;
+                }
+                
+                .header-section {
+                    text-align: center;
+                    border-bottom: 1px solid #000;
+                    padding-bottom: 10px;
+                    margin-bottom: 0;
+                    position: relative;
+                }
+                .online-tag {
+                    text-decoration: underline;
+                    font-weight: bold;
+                    margin-bottom: 15px;
+                    display: inline-block;
+                }
+                .logo-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 15px;
+                }
+                .du-logo-img {
+                    width: 70px;
+                    height: auto;
+                }
+                .uni-name-hin {
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin: 0;
+                }
+                .uni-name-eng {
+                    font-size: 22px;
+                    margin: 0;
+                }
+                
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                td, th {
+                    border: 1px solid #aaa;
+                    padding: 6px 10px;
+                    text-align: left;
+                    vertical-align: top;
+                }
+                
+                .top-info-table th {
+                    background: #f0f0f0;
+                    font-weight: bold;
+                    font-size: 12px;
+                    color: #333;
+                }
+                
+                .section-header {
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: 15px;
+                    background: #e0e0e0;
+                    padding: 8px;
+                    border: 1px solid #aaa;
+                    border-top: none;
+                }
+
+                .details-table th {
+                    width: 30%;
+                    background: #f9f9f9;
+                    font-weight: bold;
+                }
+                .details-table td {
+                    width: 70%;
+                }
+                
+                .photo-cell {
+                    width: 160px;
+                    text-align: center;
+                    vertical-align: middle;
+                    padding: 10px;
+                }
+                .photo-img {
+                    width: 130px;
+                    height: 155px;
+                    object-fit: cover;
+                    border: 1px solid #000;
+                }
+                .sign-img {
+                    width: 130px;
+                    height: 50px;
+                    object-fit: contain;
+                    border: 1px solid #000;
+                    background: #fff;
+                }
+                .media-label {
+                    font-size: 10px;
+                    font-weight: bold;
+                    color: #333;
+                    margin-top: 3px;
+                    margin-bottom: 10px;
+                }
+                
+                .address-container {
+                    display: flex;
+                    border-left: 1px solid #aaa;
+                    border-right: 1px solid #aaa;
+                    border-bottom: 1px solid #aaa;
+                }
+                .address-box {
+                    width: 50%;
+                    padding: 10px;
+                }
+                .address-box:first-child {
+                    border-right: 1px solid #aaa;
+                }
+                .address-title {
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+
+                .page-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 11px;
+                    color: #555;
+                    margin-top: 10px;
+                }
+                
+                @media print { 
+                    .print-btn { display: none; } 
+                    body { padding: 0; margin: 0;}
+                    .form-container { border: 1px solid #000; }
+                    .section-header { background: #ddd !important; -webkit-print-color-adjust: exact; }
+                }
+            </style>
+        </head>
+        <body>
+            <button class="print-btn" onclick="window.print()">Print Application Form</button>
+            
+            <div style="text-align: right; font-size: 11px; font-style: italic; margin-bottom: 5px;">
+                Generated On: ${new Date().toLocaleString('en-IN')}
+            </div>
+
+            <div class="form-container">
+                
+                <div class="header-section">
+                    <span class="online-tag">ONLINE APPLICATION FORM</span>
+                    <div class="logo-container">
+                        <img src="logo.png" alt="DU Logo" class="du-logo-img" onerror="this.src='https://upload.wikimedia.org/wikipedia/en/thumb/8/84/University_of_Delhi_seal.svg/1200px-University_of_Delhi_seal.svg.png'">
+                        <div>
+                            <p class="uni-name-hin">दिल्ली विश्वविद्यालय</p>
+                            <p class="uni-name-eng">University of Delhi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="top-info-table">
+                    <tr>
+                        <th>Application No.<br><span style="font-weight:normal; font-size:13px; color:#000;">${data.appNo}</span></th>
+                        <th>Post<br><span style="font-weight:normal; font-size:13px; color:#000;">${data.post}</span></th>
+                        <th>Organizational Unit<br><span style="font-weight:normal; font-size:13px; color:#000;">University of Delhi</span></th>
+                        <th>Advertisement No.<br><span style="font-weight:normal; font-size:13px; color:#000;">R&P/324/2026</span></th>
+                    </tr>
+                </table>
+
+                <div class="section-header">Application Fee Details</div>
+                <table class="top-info-table">
+                    <tr>
+                        <th>Mode of Payment<br><span style="font-weight:normal; font-size:13px; color:#000;">Online Mode</span></th>
+                        <th>Amount<br><span style="font-weight:normal; font-size:13px; color:#000;">₹ 500/-</span></th>
+                        <th>Date of Payment<br><span style="font-weight:normal; font-size:13px; color:#000;">${new Date().toLocaleDateString('en-IN')}</span></th>
+                    </tr>
+                </table>
+
+                <div class="section-header">Candidate Details</div>
+                
+                <table style="border-top:none;">
+                    <tr>
+                        <td style="padding:0; border:none; width:80%;">
+                            <table class="details-table" style="border:none;">
+                                <tr><th>Candidate's Name</th><td><b>${data.name.toUpperCase()}</b></td></tr>
+                                <tr><th>Email ID</th><td>${data.email}</td></tr>
+                                <tr><th>Father's / Husband's Name</th><td>${data.fname.toUpperCase()}</td></tr>
+                                <tr><th>Date Of Birth</th><td>${dobFormatted}</td></tr>
+                                <tr><th>Age (as on 2026-12-27)</th><td>${ageText}</td></tr>
+                                <tr><th>Gender</th><td>${data.gender}</td></tr>
+                                <tr><th>Marital Status</th><td>${data.marital}</td></tr>
+                                <tr><th>Category</th><td>${data.category}</td></tr>
+                                <tr><th>Applied for Category</th><td>${data.category}</td></tr>
+                                <tr><th>Nationality</th><td>Indian</td></tr>
+                                <tr><th>Whether a person with disability</th><td>No</td></tr>
+                                <tr><th>PAN/Passport/Aadhar No</th><td>${maskedAadhar}</td></tr>
+                            </table>
+                        </td>
+                        <td class="photo-cell" style="border-left: 1px solid #aaa;">
+                            <img src="${data.photoData}" alt="Photo" class="photo-img">
+                            <div class="media-label">CANDIDATE PHOTO</div>
+                            ${signatureImgHTML}
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="address-container">
+                    <div class="address-box">
+                        <div class="address-title">Address for Correspondence</div>
+                        <div style="line-height:1.6;">
+                            ${data.addressCorr}
+                        </div>
+                    </div>
+                    <div class="address-box">
+                        <div class="address-title">Permanent Address</div>
+                        <div style="line-height:1.6;">
+                            ${data.addressPerm}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header" style="border-top: none;">Educational Qualification</div>
+                <table style="border-top: none;">
+                    <tr>
+                        <th style="background:#f0f0f0;">Examination</th>
+                        <th style="background:#f0f0f0;">Board/University</th>
+                        <th style="background:#f0f0f0; text-align:center;">Year of Passing</th>
+                        <th style="background:#f0f0f0; text-align:center;">Percentage</th>
+                    </tr>
+                    <tr>
+                        <td>10TH/SSC</td>
+                        <td>${data.board10}</td>
+                        <td style="text-align:center;">${data.year10}</td>
+                        <td style="text-align:center;">${data.perc10}%</td>
+                    </tr>
+                    <tr>
+                        <td>12TH/HSC</td>
+                        <td>${data.board12}</td>
+                        <td style="text-align:center;">${data.year12}</td>
+                        <td style="text-align:center;">${data.perc12}%</td>
+                    </tr>
+                    <tr>
+                        <td>GRADUATION</td>
+                        <td>${data.boardGrad}</td>
+                        <td style="text-align:center;">${data.yearGrad}</td>
+                        <td style="text-align:center;">${data.percGrad}%</td>
+                    </tr>
+                </table>
+
+            </div>
+            
+            <div class="page-footer">
+                <span>Page 1 of 1</span>
+                <span>&copy; Samarth eGov</span>
+            </div>
+            
+            <script>window.onload = function() { setTimeout(function(){ window.print(); }, 800); }<\/script>
+        </body>
+        </html>
+    `;
+}
+
+function finishProcess() {
+    // Validate Captcha first
+    const userCaptcha = document.getElementById("captcha-input").value.trim();
+    if (!userCaptcha) {
+        alert("Please enter the Captcha code before submitting!");
+        return;
+    }
+    if (userCaptcha !== currentCaptcha) {
+        alert("Invalid Captcha code! Please try again.");
+        generateCaptcha();
+        return;
+    }
+
+    // Popup blocker fix: Open tab immediately
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+        alert("Pop-up blocked! Please allow popups for this site to view your PDF Receipt.");
+        return;
+    }
+
+    showLoader(() => {
+        clearInterval(countdownInterval); 
+        
+        // Save Application to Local Storage so Admin can see it
+        submittedApplications.push(appData);
+        localStorage.setItem('du_applications', JSON.stringify(submittedApplications));
+        
+        // Write PDF data into the opened window
+        printWindow.document.write(getReceiptHTML(appData));
+        printWindow.document.close();
+
+        // Form reset & back to dashboard
+        document.getElementById("form").reset();
+        showDashboard(); 
+        
+        setTimeout(() => {
+            alert("Payment successful! Generating your Final Submit PDF Receipt in a new tab.");
+        }, 500);
+
+    }, "Processing Payment & Generating PDF Receipt...", 1500);
+}
+</script>
+</body>
+</html>
